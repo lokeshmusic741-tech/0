@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Digital Visiting Card</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #10172a, #243b55);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 390px;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.35);
+}
+
+.header {
+    background: linear-gradient(135deg, #007bff, #6610f2);
+    height: 150px;
+}
+
+.profile {
+    margin-top: -65px;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    border: 5px solid white;
+    object-fit: cover;
+    background: #eee;
+}
+
+.content {
+    padding: 15px 25px 30px;
+}
+
+h1 {
+    font-size: 27px;
+    color: #172033;
+    margin-top: 12px;
+}
+
+.role {
+    color: #007bff;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.bio {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 15px 0 22px;
+}
+
+.details {
+    text-align: left;
+    margin-bottom: 22px;
+}
+
+.details p {
+    padding: 10px 0;
+    color: #333;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.details a {
+    color: #333;
+    text-decoration: none;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.btn {
+    padding: 13px 8px;
+    text-decoration: none;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+.call { background: #007bff; }
+.whatsapp { background: #25D366; }
+.email { background: #e74c3c; }
+.save { background: #222; }
+.share {
+    background: #6610f2;
+    grid-column: span 2;
+}
+
+.social {
+    margin-top: 23px;
+}
+
+.social a {
+    display: inline-block;
+    margin: 5px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.footer {
+    color: #999;
+    font-size: 11px;
+    margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="header"></div>
+
+    <div class="content">
+
+        <!-- Change profile.jpg to your photo -->
+        <img src="profile.jpg" class="profile" alt="Profile Photo">
+
+        <!-- EDIT YOUR DETAILS HERE -->
+        <h1>Your Name</h1>
+        <p class="role">Your Profession / Business</p>
+
+        <p class="bio">
+            Welcome to my digital visiting card.
+            Connect with me for business, services and enquiries.
+        </p>
+
+        <div class="details">
+            <p>📞 <a href="tel:+911234567890">+91 1234567890</a></p>
+            <p>💬 <a href="https://wa.me/911234567890">WhatsApp</a></p>
+            <p>✉️ <a href="mailto:you@example.com">you@example.com</a></p>
+            <p>📍 Your City, India</p>
+        </div>
+
+        <div class="buttons">
+
+            <a class="btn call" href="tel:+911234567890">
+                📞 Call Me
+            </a>
+
+            <a class="btn whatsapp"
+               href="https://wa.me/911234567890">
+                💬 WhatsApp
+            </a>
+
+            <a class="btn email"
+               href="mailto:you@example.com">
+                ✉️ Email
+            </a>
+
+            <button class="btn save" onclick="saveContact()">
+                👤 Save Contact
+            </button>
+
+            <button class="btn share" onclick="shareCard()">
+                🔗 Share My Card
+            </button>
+
+        </div>
+
+        <div class="social">
+            <a href="https://instagram.com/" target="_blank">Instagram</a>
+            <a href="https://facebook.com/" target="_blank">Facebook</a>
+            <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+        </div>
+
+        <div class="footer">
+            © 2026 Your Name | Digital Visiting Card
+        </div>
+
+    </div>
+</div>
+
+<script>
+function saveContact() {
+    const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Your Name
+ORG:Your Business
+TEL:+911234567890
+EMAIL:you@example.com
+ADR:;;Your City;Maharashtra;India
+END:VCARD`;
+
+    const blob = new Blob([vcard], {
+        type: "text/vcard"
+    });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "MyContact.vcf";
+    link.click();
+
+    URL.revokeObjectURL(link.href);
+}
+
+async function shareCard() {
+    const data = {
+        title: "My Digital Visiting Card",
+        text: "Connect with me!",
+        url: window.location.href
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(data);
+        } catch (error) {
+            console.log("Sharing cancelled");
+        }
+    } else {
+        await navigator.clipboard.writeText(data.url);
+        alert("Website link copied!");
+    }
+}
+</script>
+
+</body>
+</html>
